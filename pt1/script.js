@@ -10,7 +10,7 @@ const CANVAS_WIDTH= canvas.width = 600;
 const CANVAS_HEIGHT = canvas.height = 600;
 
 const playerImage = new Image();
-playerImage.src = './assets/shadow_dog.png';
+playerImage.src = '../assets/shadow_dog.png';
 
 // 전체 스프라이트 너비를 가져와서 계산하여 이미지 도출.
 //width: 6876px / 12 = 573 , height: 5230/10 = 523
@@ -23,6 +23,7 @@ let gameFrame = 0;
 
 const staggerFrames = 5; // 움직임 frame 수
 const spriteAnimations=[];
+// sprite 이미지를 name, frames로 제어하기 위함.
 const animationStates=[
     {
         name:'idle',
