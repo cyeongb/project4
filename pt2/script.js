@@ -61,7 +61,7 @@ function animate(){
     ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
     layer4.update();
     layer4.draw();
-
+    //1:11:19
     requestAnimationFrame(animate);
 };
 
