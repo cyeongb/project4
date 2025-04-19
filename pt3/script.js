@@ -81,14 +81,5 @@ function animate(){
   requestAnimationFrame(animate);
 }
 
-//2:24:59
 
 animate();
-
-
-
-
-
-
-
-

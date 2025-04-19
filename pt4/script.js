@@ -82,15 +82,3 @@ function animate(){
 };
 
 animate();
-
-
-
-//2:45:19
-
-
-
-
-
-
-
-

@@ -82,7 +82,7 @@ window.addEventListener("load", () => {
       obj.update();
       obj.draw();
     });
-    //1:11:19
+    
     gameFrame--;
     console.log("gameFrame::", gameFrame);
     requestAnimationFrame(animate);
