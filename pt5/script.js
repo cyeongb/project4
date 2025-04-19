@@ -218,9 +218,3 @@ function animate(timeStamp){
 
 animate(0);
 
-
-
-
-
-
-
