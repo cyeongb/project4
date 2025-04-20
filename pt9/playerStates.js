@@ -29,7 +29,7 @@ export class Sitting extends State {
 
     handleInput(input){  //앉아 있을 때, 방향키 누르면 달림
        if(input.includes('ArrowLeft') || input.includes('ArrowRight')){
-        this.player.setState(states.RUNNING);
+        this.player.setState(states.RUNNING,2);
        }
     };
 };
@@ -48,9 +48,9 @@ export class Running extends State {
 
     handleInput(input){ 
        if(input.includes('ArrowDown')){ //달릴 때 ARROW DOWN 누르면 앉음
-        this.player.setState(states.SITTING);
+        this.player.setState(states.SITTING,0);
        }else if(input.includes('ArrowUp')){ //달릴 때 ARROW UP 누르면 뒴
-        this.player.setState(states.JUMPING);
+        this.player.setState(states.JUMPING,1);
        }
     };
 };
@@ -72,7 +72,7 @@ export class Jumping extends State {
 
     handleInput(input){ // 뛴 후 내려올 때
        if(this.player.vy > this.player.weight){
-        this.player.setState(states.FALLING);
+        this.player.setState(states.FALLING,1);
        }
     };
 };
@@ -91,7 +91,7 @@ export class Falling extends State {
 
     handleInput(input){  //내려온 후 달림 상태로 전환
        if(this.player.onGround()){
-        this.player.setState(states.RUNNING);
+        this.player.setState(states.RUNNING,2);
        }
     };
 };

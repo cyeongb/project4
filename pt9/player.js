@@ -21,7 +21,7 @@ export class Player{
         this.frameTimer = 0;
 
         this.speed = 0;
-        this.maxSpeed = 5;
+        this.maxSpeed = 3;
 
         this.states = [new Sitting(this), new Running(this) , new Jumping(this), new Falling(this)];
         this.currentState = this.states[0];
@@ -80,8 +80,9 @@ export class Player{
         return this.y >= this.game.height - this.height - this.game.groundMargin;
     }
 
-    setState(state){
+    setState(state, speed){
         console.log("현재 state =>> ",this.states[state]);
+        this.game.speed = this.game.maxSpeed * speed;
         this.currentState = this.states[state];
         this.currentState.enter();
     }
