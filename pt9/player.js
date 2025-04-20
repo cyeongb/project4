@@ -8,7 +8,7 @@ export class Player{
         this.height = 91.3;
 
         this.x = 0;
-        this.y = this.game.height - this.height;
+        this.y = this.game.height - this.height - this.game.groundMargin;
         this.vy = 0;
         this.weight = 0.5; // y축으로 뛸 때 무게감을 주기위함
 
@@ -16,7 +16,7 @@ export class Player{
         this.frameX = 0;
         this.frameY = 0;
         this.maxFrame;  //이미지 스프라이트의 max 프레임
-        this.fps = 20;
+        this.fps = 60;
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0;
 
@@ -77,7 +77,7 @@ export class Player{
     }
 
     onGround(){
-        return this.y >= this.game.height - this.height;
+        return this.y >= this.game.height - this.height - this.game.groundMargin;
     }
 
     setState(state){
@@ -86,5 +86,3 @@ export class Player{
         this.currentState.enter();
     }
 }
-
-//record 7:41:43
