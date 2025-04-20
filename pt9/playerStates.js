@@ -49,8 +49,8 @@ export class Running extends State {
     handleInput(input){ 
        if(input.includes('ArrowDown')){ //달릴 때 ARROW DOWN 누르면 앉음
         this.player.setState(states.SITTING,0);
-       }else if(input.includes('ArrowUp')){ //달릴 때 ARROW UP 누르면 뒴
-        this.player.setState(states.JUMPING,1);
+       }else if(input.includes('ArrowUp')){ //달릴 때 ARROW UP 누르면 jump
+        this.player.setState(states.JUMPING,2);
        }
     };
 };
@@ -72,7 +72,7 @@ export class Jumping extends State {
 
     handleInput(input){ // 뛴 후 내려올 때
        if(this.player.vy > this.player.weight){
-        this.player.setState(states.FALLING,1);
+        this.player.setState(states.FALLING,2);
        }
     };
 };

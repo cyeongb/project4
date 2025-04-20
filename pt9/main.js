@@ -3,6 +3,7 @@
 import { Player } from "./player.js";
 import {InputHandler} from "./input.js";
 import { Background } from "./background.js";
+import {FlyEnemy, GroundEnemy, ClimbEnemy } from "./enemies.js"
 
 window.addEventListener('load', function(){
     const canvas = this.document.getElementById('canvas1');
@@ -15,22 +16,59 @@ window.addEventListener('load', function(){
         constructor(width,height){
             this.width = width;
             this.height = height;
-            this.groundMargin = 50;
+            this.groundMargin = 80;
+
             this.speed = 0;
-            this.maxSpeed = 5;
+            this.maxSpeed = 3;
+
+            this.background = new Background(this);
             this.player = new Player(this);
             this.input = new InputHandler();
-            this.background = new Background(this);
+
+            this.enemies = [];
+            this.enemyTimer = 0;
+            this.enemyInterval = 1000;
         }
 
         update(deltaTime){
             this.background.updateBackground();
             this.player.playerUpdate(this.input.keys , deltaTime);
+
+            // 적 나오는 시간 조정
+            if(this.enemyTimer > this.enemyInterval){
+                this.addEnemy();
+                this.enemyTimer = 0;
+            }else{
+                this.enemyTimer += deltaTime;
+            }
+
+            this.enemies.forEach(enemy => {
+                enemy.updateEnemy(deltaTime);
+                if(enemy.markedForDeletion){
+                    this.enemies.splice(this.enemies.indexOf(enemy),1);
+                }
+                
+            });
         }
 
-        draw(cotext){
-            this.background.drawBackground(cotext);
-            this.player.playerDraw(cotext);
+        draw(context){
+            this.background.drawBackground(context);
+            this.player.playerDraw(context);
+
+            this.enemies.forEach(enemy => {
+                enemy.drawEnemy(context);
+            });
+        }
+
+
+        addEnemy(){
+            if(this.speed > 0 && Math.random() < 0.5){
+                this.enemies.push(new GroundEnemy(this));
+            }else if(this.speed > 0 ){
+                this.enemies.push(new ClimbEnemy(this));
+            }
+            this.enemies.push(new FlyEnemy(this));  //여기서 game 객체 넘겨줌.
+            console.log("this.enemies =>>",this.enemies);
         }
     }
 

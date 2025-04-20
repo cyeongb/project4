@@ -10,7 +10,7 @@ export class Player{
         this.x = 0;
         this.y = this.game.height - this.height - this.game.groundMargin;
         this.vy = 0;
-        this.weight = 0.5; // y축으로 뛸 때 무게감을 주기위함
+        this.weight = 0.6; // y축으로 뛸 때 무게감을 주기위함
 
         this.image = document.getElementById('player');
         this.frameX = 0;
@@ -20,7 +20,7 @@ export class Player{
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0;
 
-        this.speed = 0;
+        this.speed = 2;
         this.maxSpeed = 3;
 
         this.states = [new Sitting(this), new Running(this) , new Jumping(this), new Falling(this)];
@@ -36,9 +36,9 @@ export class Player{
         //x 좌표 움직임 구현
         this.x += this.speed;
         if(input.includes('ArrowRight')){ 
-            this.speed = this.maxSpeed; 
+            this.speed = this.maxSpeed+1;  //앞으로 갈 때
         }else if(input.includes('ArrowLeft')){ 
-            this.speed = -this.maxSpeed;
+            this.speed = -this.maxSpeed;  //뒤로 갈 때때
         }else{
             this.speed = 0;}
 
