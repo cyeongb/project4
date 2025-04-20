@@ -5,7 +5,6 @@ const CANVAS_HEIGHT = (canvas.height = 700);
 
 //canvas DOMRect  객체의 정보(bottom,height,left,right,top,width,x,y)
 let canvasPosition = canvas.getBoundingClientRect();
-console.log("canvasPosition=>",canvasPosition);
 
 const explosions = [];
 
@@ -62,7 +61,6 @@ function createAnimation(e){
     let positionY = e.y -canvasPosition.top;
 
     explosions.push(new Explosion(positionX,positionY));
-    console.log("explosions[]=>",explosions);
 }
 
 

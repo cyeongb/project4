@@ -68,7 +68,6 @@ for(let i =0;i<numberEnemies;i++){
   enemiesArr.push(new Enemy());
 }
 
-console.log(enemiesArr);
 
 
 function animate(){

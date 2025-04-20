@@ -71,7 +71,9 @@ export class Player{
     }
 
     playerDraw(context){
-     
+        if(this.game.debug){ //debug 모드일 때 테스트용 히트박스 그림
+            context.strokeRect(this.x , this.y, this.width , this.height);
+        }
         context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height, this.width, this.height, 
             this.x, this.y, this.width, this.height);
     }
@@ -81,7 +83,6 @@ export class Player{
     }
 
     setState(state, speed){
-        console.log("현재 state =>> ",this.states[state]);
         this.currentState = this.states[state];
         this.game.speed = this.game.maxSpeed * speed;
         this.currentState.enter();

@@ -25,7 +25,7 @@ export class Enemy {
             this.frameTimer += deltaTime;
         }
 
-        if(this.x + this.wdith < 0){
+        if(this.x + this.width < 0){
             this.markedForDeletion = true;
         }
     };
@@ -41,7 +41,7 @@ export class FlyEnemy extends Enemy{
     constructor(game){
         super();
         this.game = game;
-        this.wdith = 60;
+        this.width = 60;
         this.height = 44;
         this.x = this.game.width + Math.random() * this.game.width * 0.5;
         this.y = Math.random() * this.game.height * 0.5;
@@ -68,12 +68,11 @@ export class FlyEnemy extends Enemy{
 export class GroundEnemy extends Enemy{
     constructor(game){
         super();
-        console.log("game =>>>>>>>",game);
         this.game = game;
-        this.wdith = 60;
+        this.width = 60;
         this.height = 87;
 
-        this.x = this.game.wdith;
+        this.x = this.game.width;
         this.y = this.game.height - this.height - this.game.groundMargin;
         this.image = document.getElementById('enemy_plant');
 
@@ -95,12 +94,11 @@ export class GroundEnemy extends Enemy{
 export class ClimbEnemy extends Enemy{
     constructor(game){
         super();
-        console.log("game =>>>>>>>",game);
         this.game = game;
-        this.wdith = 120;
+        this.width = 120;
         this.height = 144;
 
-        this.x = this.game.wdith;
+        this.x = this.game.width;
         this.y = Math.random() * this.game.height * 0.5;
         this.image = document.getElementById('enemy_spider_big');
 

@@ -78,7 +78,6 @@ animationStates.forEach((state,i)=>{
     }
     spriteAnimations[state.name] = frames;
 });
-console.log("animationStates=>",animationStates);
 
 
 function animate(){

@@ -41,7 +41,6 @@ export class Background{
         this.layer3 =  new Layer(this.game, this.width, this.height, 0.4 , this.layer3image);
         this.layer4 =  new Layer(this.game, this.width, this.height, 0.8 , this.layer4image);
         this.layer5 =  new Layer(this.game, this.width, this.height, 1.4 , this.layer5image);
-        console.log("this.layer1 => ",this.layer1)
         this.backgroundLayers = [this.layer1, this.layer2, this.layer3, this.layer4, this.layer5];
     }
 

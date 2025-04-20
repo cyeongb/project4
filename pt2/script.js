@@ -84,7 +84,6 @@ window.addEventListener("load", () => {
     });
     
     gameFrame--;
-    console.log("gameFrame::", gameFrame);
     requestAnimationFrame(animate);
   }
 

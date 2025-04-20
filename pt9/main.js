@@ -28,6 +28,8 @@ window.addEventListener('load', function(){
             this.enemies = [];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
+
+            this.debug = true;
         }
 
         update(deltaTime){
@@ -68,12 +70,10 @@ window.addEventListener('load', function(){
                 this.enemies.push(new ClimbEnemy(this));
             }
             this.enemies.push(new FlyEnemy(this));  //여기서 game 객체 넘겨줌.
-            console.log("this.enemies =>>",this.enemies);
         }
     }
 
     const game = new Game(canvas.width, canvas.height);
-    console.log("game =>> ",game);
 
     let lastTime = 0;
 

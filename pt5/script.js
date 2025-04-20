@@ -106,7 +106,6 @@ class Explosions {
         if(this.timeSinceLastFrame > this.frameInterval){ 
             this.frame ++; 
             this.timeSinceLastFrame = 0;
-            // console.log("this.frame=>",this.frame)
             if(this.frame >5){
                 this.markedForDelete = true;
             }
@@ -171,13 +170,10 @@ function drawGameOver(){
 
 window.addEventListener('click',function(e){
     const detectPixelColor = collisionCtx.getImageData(e.x, e.y, 1, 1);
-    console.log("detectPixelColor=>",detectPixelColor);
     const pc = detectPixelColor.data;
-    console.log("pc =>",pc);
     ravens.forEach(obj=>{ //색상비교
         if(obj.randomColors[0] === pc[0] && obj.randomColors[1] === pc[1] &&  obj.randomColors[2] === pc[2] ){
             obj.markedForDelete = true;
-            console.log('obj =>',obj)
             score++;
 
             //충돌시 효과 추가
