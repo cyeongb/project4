@@ -23,7 +23,7 @@ window.addEventListener('load', function(){
 
             this.background = new Background(this);
             this.player = new Player(this);
-            this.input = new InputHandler();
+            this.input = new InputHandler(this);
 
             this.enemies = [];
             this.enemyTimer = 0;

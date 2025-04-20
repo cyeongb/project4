@@ -87,4 +87,20 @@ export class Player{
         this.game.speed = this.game.maxSpeed * speed;
         this.currentState.enter();
     }
+
+    //player와 적이 충돌 하는 상태 체크
+    checkCollision(){
+        this.game.enemies.forEach(enemy => {
+            if(enemy.x < this.x + this.width && 
+               enemy.x + enemy.width > this.x &&
+               enemy.y < this.y + this.height &&
+               enemy.y + enemy.height > this.y
+            ){
+                //충돌되었다면
+                // 8:36:59
+            }else{
+
+            }
+        })
+    }
 }

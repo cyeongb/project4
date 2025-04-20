@@ -1,5 +1,6 @@
 export class InputHandler{
-    constructor(){
+    constructor(game){
+        this.game = game;
         this.keys = [];
         window.addEventListener('keydown', e => {
             if((e.key === 'ArrowDown' || 
@@ -9,7 +10,7 @@ export class InputHandler{
                 e.key === 'Enter') 
                 && this.keys.indexOf(e.key) === -1){
                 this.keys.push(e.key);
-            }else if(e.key === 'd'){
+            }else if(e.key === 'd'){  //d 누르면 디버그모드 실행..테스트용
                 this.game.debug = !this.game.debug;
             }
         });
