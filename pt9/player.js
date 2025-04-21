@@ -41,10 +41,10 @@ export class Player{
 
         //x 좌표 움직임 구현
         this.x += this.speed;
-        if(input.includes('ArrowRight')){ 
+        if(input.includes('ArrowRight') && this.currentState !== this.states[6]){ 
             this.speed = this.maxSpeed+1;  //앞으로 갈 때
         }else if(input.includes('ArrowLeft')){ 
-            this.speed = -this.maxSpeed;  //뒤로 갈 때때
+            this.speed = -this.maxSpeed;  //뒤로 갈 때
         }else{
             this.speed = 0;}
 

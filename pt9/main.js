@@ -26,6 +26,7 @@ window.addEventListener('load', function(){
             this.maxSpeed = 3;
 
             // 배경, 플레이어 인스턴스 생성
+            this.score = 0;
             this.background = new Background(this);
             this.player = new Player(this);
             this.input = new InputHandler(this);
@@ -36,7 +37,7 @@ window.addEventListener('load', function(){
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
             this.time = 0;
-            this.maxTime = 2000;
+            this.maxTime = 200000;
             
             //player 의 파편
             this.particles=[];
@@ -90,9 +91,9 @@ window.addEventListener('load', function(){
                 }
             });
 
-            //파편이 너무 길어서 자름
+            //파편이 너무 길어서 max 까지만
             if(this.particles.length > this.maxParticles){
-                this.particles = this.particles.slice(0,this.maxParticles);
+                this.particles.length = this.maxParticles;
             }
 
             //충돌 처리
