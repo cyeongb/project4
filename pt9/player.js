@@ -1,4 +1,4 @@
-import { Sitting , Running , Jumping , Falling } from './playerStates.js'
+import { Sitting , Running , Jumping , Falling ,Rolling ,Diving } from './playerStates.js'
 
 // 플레이어 정의
 export class Player{
@@ -20,15 +20,20 @@ export class Player{
         this.frameInterval = 1000/this.fps;
         this.frameTimer = 0;
 
-        this.speed = 2;
+        this.speed = 0;
         this.maxSpeed = 3;
 
-        this.states = [new Sitting(this), new Running(this) , new Jumping(this), new Falling(this)];
+        this.states = [new Sitting(this), new Running(this) , new Jumping(this), 
+            new Falling(this), new Rolling(this)];
         this.currentState = this.states[0];
         this.currentState.enter();
+
+        this.score = 0;
     }
 
     playerUpdate(input, deltaTime){
+
+        this.checkCollision();  //충돌검사
 
         //현재 상태값
         this.currentState.handleInput(input);
@@ -96,10 +101,11 @@ export class Player{
                enemy.y < this.y + this.height &&
                enemy.y + enemy.height > this.y
             ){
-                //충돌되었다면
-                // 8:36:59
+               //닿으면 없어진다.
+               enemy.markedForDeletion = true;
+               this.game.score ++;
             }else{
-
+                // 충돌 x
             }
         })
     }

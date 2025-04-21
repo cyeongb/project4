@@ -1,10 +1,13 @@
 // 상태값 위한 ENUM 정의
 
 const states = {
-    SITTING : 0,
-    RUNNING : 1,
-    JUMPING : 2,
-    FALLING : 3,
+    SITTING : 0,  //앉기
+    RUNNING : 1,  //달리기
+    JUMPING : 2,  //점프
+    FALLING : 3,  //점프 후 떨어짐
+    ROLLING : 4,  //구르기
+    DIVING : 5,  //치기(장애물 부수기)
+    HIT : 6,   // 부딪힘
 };
 
 //super
@@ -29,7 +32,9 @@ export class Sitting extends State {
 
     handleInput(input){  //앉아 있을 때, 방향키 누르면 달림
        if(input.includes('ArrowLeft') || input.includes('ArrowRight')){
-        this.player.setState(states.RUNNING,2);
+        this.player.setState(states.RUNNING,1);
+       }else if(input.includes('Control')){
+        this.player.setState(states.ROLLING,2);
        }
     };
 };
@@ -50,7 +55,9 @@ export class Running extends State {
        if(input.includes('ArrowDown')){ //달릴 때 ARROW DOWN 누르면 앉음
         this.player.setState(states.SITTING,0);
        }else if(input.includes('ArrowUp')){ //달릴 때 ARROW UP 누르면 jump
-        this.player.setState(states.JUMPING,2);
+        this.player.setState(states.JUMPING,1);
+       }else if(input.includes('Control')){
+        this.player.setState(states.ROLLING,2);
        }
     };
 };
@@ -72,7 +79,9 @@ export class Jumping extends State {
 
     handleInput(input){ // 뛴 후 내려올 때
        if(this.player.vy > this.player.weight){
-        this.player.setState(states.FALLING,2);
+        this.player.setState(states.FALLING,1);
+       }else if(input.includes('Control')){
+        this.player.setState(states.ROLLING,2);
        }
     };
 };
@@ -91,7 +100,69 @@ export class Falling extends State {
 
     handleInput(input){  //내려온 후 달림 상태로 전환
        if(this.player.onGround()){
-        this.player.setState(states.RUNNING,2);
+        this.player.setState(states.RUNNING,1);
+       }
+    };
+};
+
+export class Rolling extends State {
+    constructor(player) {
+        super('ROLLING');
+        this.player = player;
+    }
+
+    enter(){
+        this.player.frameX = 0;
+        this.player.maxFrame = 6;
+        this.player.frameY = 6;
+    };
+
+    handleInput(input){  //내려온 후 달림 상태로 전환
+        console.log("input=>",input);
+       if(!input.includes('Control') && this.player.onGround()){
+        this.player.setState(states.RUNNING,1);
+       }else if(!input.includes('Control') && !this.player.onGround()){
+        this.player.setState(states.FALLING,1);
+       }else if(input.includes('Control') && input.includes('ArrowUp') && this.player.onGround()){
+        this.player.vy -= 24;
+       }
+    };
+};
+
+export class Diving extends State {
+    constructor(player) {
+        super('DIVING');
+        this.player = player;
+    }
+
+    enter(){
+        this.player.frameX = 0;
+        this.player.maxFrame = 6;
+        this.player.frameY = 2;
+    };
+
+    handleInput(input){  //내려온 후 달림 상태로 전환
+       if(this.player.onGround()){
+        this.player.setState(states.RUNNING,1);
+       }
+    };
+};
+
+export class Hit extends State {
+    constructor(player) {
+        super('HIT');
+        this.player = player;
+    }
+
+    enter(){
+        this.player.frameX = 0;
+        this.player.maxFrame = 6;
+        this.player.frameY = 2;
+    };
+
+    handleInput(input){  //내려온 후 달림 상태로 전환
+       if(this.player.onGround()){
+        this.player.setState(states.RUNNING,1);
        }
     };
 };

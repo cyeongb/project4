@@ -3,7 +3,8 @@
 import { Player } from "./player.js";
 import {InputHandler} from "./input.js";
 import { Background } from "./background.js";
-import {FlyEnemy, GroundEnemy, ClimbEnemy } from "./enemies.js"
+import {FlyEnemy, GroundEnemy, ClimbEnemy } from "./enemies.js";
+import { UI } from './UI.js';
 
 window.addEventListener('load', function(){
     const canvas = this.document.getElementById('canvas1');
@@ -14,22 +15,32 @@ window.addEventListener('load', function(){
 
     class Game{
         constructor(width,height){
+            
+            // 크기, 높이 설정
             this.width = width;
             this.height = height;
             this.groundMargin = 80;
 
+            //속도 관련
             this.speed = 0;
             this.maxSpeed = 3;
 
+            // 배경, 플레이어 인스턴스 생성
             this.background = new Background(this);
             this.player = new Player(this);
             this.input = new InputHandler(this);
+            this.UI = new UI(this);
 
+            //적 관련, 나타나는 시간
             this.enemies = [];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
 
-            this.debug = true;
+            //debug 모드
+            this.debug = false;
+
+            //font
+            this.fontColor = '#000';
         }
 
         update(deltaTime){
@@ -60,9 +71,12 @@ window.addEventListener('load', function(){
             this.enemies.forEach(enemy => {
                 enemy.drawEnemy(context);
             });
+
+            this.UI.drawUI(context);
+
         }
 
-
+        //적을 랜덤으로 생성
         addEnemy(){
             if(this.speed > 0 && Math.random() < 0.5){
                 this.enemies.push(new GroundEnemy(this));

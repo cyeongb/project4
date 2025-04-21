@@ -57,5 +57,3 @@ export class Background{
 
     }
 }
-
-//record 8:06:26
