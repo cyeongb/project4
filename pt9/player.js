@@ -1,5 +1,5 @@
 import { Sitting , Running , Jumping , Falling , Rolling , Diving , Hit } from './playerStates.js'
-
+import { CollisionAnimation } from './collisionAnimation.js'
 // 플레이어 정의
 export class Player{
     constructor(game){
@@ -107,9 +107,16 @@ export class Player{
                enemy.y < this.y + this.height &&
                enemy.y + enemy.height > this.y
             ){
-               //닿으면 없어진다.
                enemy.markedForDeletion = true;
-               this.game.score ++;
+                this.game.collisions.push(new CollisionAnimation(this.game, enemy.x + enemy.width * 0.5, enemy.y + enemy.height * 0.5 ));
+
+               // 닿을 때, 상태가 Rolling 이거나 Diving 이면 ok
+               if(this.currentState === this.states[4] ||this.currentState === this.states[5] ){
+                   this.game.score ++;
+
+               }else{ //부딪힌 상태(스턴)
+                    this.setState(6,0);
+               }
             }else{
                 // 충돌 x
             }

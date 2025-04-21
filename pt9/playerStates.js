@@ -136,6 +136,8 @@ export class Rolling extends State {
         this.game.player.setState(states.FALLING,1);
        }else if(input.includes('Control') && input.includes('ArrowUp') && this.game.player.onGround()){
         this.game.player.vy -= 24;
+       }else if(input.includes('ArrowDown')){
+        this.game.player.setState(states.DIVING , 0);
        }
     };
 };
@@ -149,6 +151,7 @@ export class Diving extends State {
         this.game.player.frameX = 0;
         this.game.player.maxFrame = 6;
         this.game.player.frameY = 6;
+        this.game.player.vy = 15;
     };
 
     handleInput(input){  //내려온 후 달림 상태로 전환
@@ -174,14 +177,16 @@ export class Hit extends State {
     }
 
     enter(){
+        this.game.player.maxFrame = 10;
         this.game.player.frameX = 0;
-        this.game.player.maxFrame = 6;
-        this.game.player.frameY = 2;
+        this.game.player.frameY = 4;
     };
 
     handleInput(input){  //내려온 후 달림 상태로 전환
-       if(this.game.player.onGround()){
+       if(this.game.player.frameX >= 10 && this.game.player.onGround() ){
         this.game.player.setState(states.RUNNING,1);
+       }else if(this.game.player.frameX >= 10 && !this.game.player.onGround()){
+        this.game.player.setState(states.FALLING,1);
        }
     };
 };

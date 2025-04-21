@@ -35,10 +35,15 @@ window.addEventListener('load', function(){
             this.enemies = [];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
+            this.time = 0;
+            this.maxTime = 2000;
             
             //player 의 파편
             this.particles=[];
             this.maxParticles = 50; // 파편 길이
+
+            //충돌
+            this.collisions = [];
 
             //debug 모드
             this.debug = false;
@@ -46,12 +51,19 @@ window.addEventListener('load', function(){
             //font
             this.fontColor = '#000';
 
+            //player 상태
             this.player.currentState = this.player.states[0];
             this.player.currentState.enter();
+            this.gameOver = false;
 
         }
 
         update(deltaTime){
+            this.time += deltaTime;
+            if(this.time > this.maxTime){
+                this.gameOver = true;
+            }
+
             this.background.updateBackground();
             this.player.playerUpdate(this.input.keys , deltaTime);
 
@@ -82,6 +94,15 @@ window.addEventListener('load', function(){
             if(this.particles.length > this.maxParticles){
                 this.particles = this.particles.slice(0,this.maxParticles);
             }
+
+            //충돌 처리
+            this.collisions.forEach((collision,i)=>{
+                collision.updateCollision(deltaTime);
+                if(collision.markedForDeletion){
+                    this.collisions.splice(i, 1);
+                }
+            });
+
         }
 
         draw(context){
@@ -96,6 +117,9 @@ window.addEventListener('load', function(){
                 part.drawParticle(context);
             });
 
+            this.collisions.forEach(col => {
+                col.drawCollision(context);
+            });
 
             this.UI.drawUI(context);
 
@@ -123,7 +147,7 @@ window.addEventListener('load', function(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         game.update(deltaTime);
         game.draw(ctx);
-        requestAnimationFrame(animate);
+        if(!game.gameOver) requestAnimationFrame(animate);
     }
     animate(0);
 });
