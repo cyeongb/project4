@@ -1,5 +1,7 @@
 import { Sitting , Running , Jumping , Falling , Rolling , Diving , Hit } from './playerStates.js'
 import { CollisionAnimation } from './collisionAnimation.js'
+import { FloatingMsg } from './floatingMessage.js'
+
 // 플레이어 정의
 export class Player{
     constructor(game){
@@ -30,6 +32,8 @@ export class Player{
         // this.currentState.enter();
 
         this.score = 0;
+
+        this.currentState = null;
     }
 
     playerUpdate(input, deltaTime){
@@ -113,10 +117,12 @@ export class Player{
                // 닿을 때, 상태가 Rolling 이거나 Diving 이면 ok
                if(this.currentState === this.states[4] ||this.currentState === this.states[5] ){
                    this.game.score ++;
+                   this.game.floatingMessages.push(new FloatingMsg('+1', enemy.x, enemy.y, 150, 100 ));
 
                }else{ //부딪힌 상태(스턴)
                     this.setState(6,0);
                     this.game.lives --;  //목숨 깎임
+                    this.game.score -= 5; //점수도 깎임.?
                     if(this.game.lives <= 0){
                         this.game.gameOver = true;
                     }

@@ -37,7 +37,7 @@ window.addEventListener('load', function(){
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
             this.time = 0;
-            this.maxTime = 200000;
+            this.maxTime = 20000;  //시간제한
             
             //player 의 파편
             this.particles=[];
@@ -57,6 +57,7 @@ window.addEventListener('load', function(){
             this.player.currentState.enter();
             this.gameOver = false;
             this.lives = 5; //목숨 5개
+            this.floatingMessages = [];
 
         }
 
@@ -79,17 +80,16 @@ window.addEventListener('load', function(){
 
             this.enemies.forEach(enemy => {
                 enemy.updateEnemy(deltaTime);
-                if(enemy.markedForDeletion){
-                    this.enemies.splice(this.enemies.indexOf(enemy),1);
-                }
+            });
+
+            //적 처치 시 뜨는 floating msg
+            this.floatingMessages.forEach(msg => {
+                msg.updateFloating();
             });
 
             //파편 처리
             this.particles.forEach((part,i)=>{
                 part.updateParticles();
-                if(part.markedForDeletion){
-                    this.particles.splice(i,1);
-                }
             });
 
             //파편이 너무 길어서 max 까지만
@@ -100,10 +100,12 @@ window.addEventListener('load', function(){
             //충돌 처리
             this.collisions.forEach((collision,i)=>{
                 collision.updateCollision(deltaTime);
-                if(collision.markedForDeletion){
-                    this.collisions.splice(i, 1);
-                }
             });
+
+            this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion);
+            this.particles = this.particles.filter(particle => !particle.markedForDeletion);
+            this.collisions = this.collisions.filter(col => !col.markedForDeletion);
+            this.floatingMessages = this.floatingMessages.filter(msg => !msg.markedForDeletion);
 
         }
 
@@ -122,6 +124,11 @@ window.addEventListener('load', function(){
             this.collisions.forEach(col => {
                 col.drawCollision(context);
             });
+
+            this.floatingMessages.forEach(msg => {
+                msg.drawFloating(context);
+            });
+
 
             this.UI.drawUI(context);
 
