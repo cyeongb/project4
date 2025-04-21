@@ -14,6 +14,10 @@ class Particle{
             this.markedForDeletion = true;
         }
     };
+
+    drawParticle(context){
+
+    };
 };
 
 //먼지
@@ -28,7 +32,7 @@ export class Dust extends Particle{
         this.color = '#000';
     };
 
-    drawDust(context){
+    drawParticle(context){
         context.beginPath();
         context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         context.fillStyle = this.color;
@@ -44,6 +48,10 @@ export class Splash extends Particle{
 
     };
 
+    drawParticle(context){
+
+    }
+
 };
 
 //불효과
@@ -52,6 +60,10 @@ export class Fire extends Particle{
         super(game);
 
     };
+
+    drawParticle(context){
+        
+    }
 
 };
 // record 8:48:15

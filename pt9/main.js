@@ -33,6 +33,7 @@ window.addEventListener('load', function(){
 
             //적 관련, 나타나는 시간
             this.enemies = [];
+            this.particles=[];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
 
@@ -64,8 +65,15 @@ window.addEventListener('load', function(){
                 if(enemy.markedForDeletion){
                     this.enemies.splice(this.enemies.indexOf(enemy),1);
                 }
-                
             });
+
+            //파편 처리
+            this.particles.forEach((part,i)=>{
+                part.updateParticles();
+                if(part.markedForDeletion){
+                    this.particles.splice(i,1);
+                }
+            })
         }
 
         draw(context){
@@ -75,6 +83,11 @@ window.addEventListener('load', function(){
             this.enemies.forEach(enemy => {
                 enemy.drawEnemy(context);
             });
+
+            this.particles.forEach(part => {
+                part.drawParticle(context);
+            });
+
 
             this.UI.drawUI(context);
 

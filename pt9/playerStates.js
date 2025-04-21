@@ -54,6 +54,8 @@ export class Running extends State {
     };
 
     handleInput(input){ 
+        this.game.particles.push(new Dust(this.game, this.game.player.x, this.game.player.y));
+
        if(input.includes('ArrowDown')){ //달릴 때 ARROW DOWN 누르면 앉음
         this.game.player.setState(states.SITTING,0);
        }else if(input.includes('ArrowUp')){ //달릴 때 ARROW UP 누르면 jump
