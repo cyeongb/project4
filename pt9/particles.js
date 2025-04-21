@@ -20,7 +20,7 @@ class Particle{
     };
 };
 
-//먼지
+//먼지(강쥐 달릴 때 먼지 튀는거..)
 export class Dust extends Particle{
     constructor(game, x, y){
         super(game);
@@ -29,7 +29,7 @@ export class Dust extends Particle{
         this.y = y;
         this.speedX = Math.random();
         this.speedY = Math.random();
-        this.color = '#000';
+        this.color = 'rgba(0,0,0,0.2)';
     };
 
     drawParticle(context){

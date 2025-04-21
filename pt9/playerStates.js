@@ -54,7 +54,9 @@ export class Running extends State {
     };
 
     handleInput(input){ 
-        this.game.particles.push(new Dust(this.game, this.game.player.x, this.game.player.y));
+        this.game.particles.push(new Dust(
+            this.game, this.game.player.x + this.game.player.width * 0.6,
+            this.game.player.y + this.game.player.height));
 
        if(input.includes('ArrowDown')){ //달릴 때 ARROW DOWN 누르면 앉음
         this.game.player.setState(states.SITTING,0);
