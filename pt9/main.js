@@ -41,6 +41,10 @@ window.addEventListener('load', function(){
 
             //font
             this.fontColor = '#000';
+
+            this.player.currentState = this.player.states[0];
+            this.player.currentState.enter();
+
         }
 
         update(deltaTime){

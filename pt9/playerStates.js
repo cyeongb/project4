@@ -1,3 +1,6 @@
+import { Dust, Fire, Splash } from './particles.js'
+
+
 // 상태값 위한 ENUM 정의
 
 const states = {
@@ -12,157 +15,151 @@ const states = {
 
 //super
 class State{
-    constructor(state){
+    constructor(state , game){
         this.state = state;
+        this.game = game;
     };
 };
 
 //동적 state 구현 위한 상속
 export class Sitting extends State {
-    constructor(player) {
-        super('SITTING');
-        this.player = player;
+    constructor(game) {
+        super('SITTING',game);
     };
 
     enter(){
-        this.player.frameX = 0;
-        this.player.maxFrame = 4;
-        this.player.frameY = 5;
+        this.game.player.frameX = 0;
+        this.game.player.maxFrame = 4;
+        this.game.player.frameY = 5;
     };
 
     handleInput(input){  //앉아 있을 때, 방향키 누르면 달림
        if(input.includes('ArrowLeft') || input.includes('ArrowRight')){
-        this.player.setState(states.RUNNING,1);
+        this.game.player.setState(states.RUNNING,1);
        }else if(input.includes('Control')){
-        this.player.setState(states.ROLLING,2);
+        this.game.player.setState(states.ROLLING,2);
        }
     };
 };
 
 export class Running extends State {
-    constructor(player) {
-        super('RUNNING');
-        this.player = player;
+    constructor(game) {
+        super('RUNNING',game);
     };
 
     enter(){
-        this.player.frameX = 0;
-        this.player.maxFrame = 8;
-        this.player.frameY = 3;
+        this.game.player.frameX = 0;
+        this.game.player.maxFrame = 8;
+        this.game.player.frameY = 3;
     };
 
     handleInput(input){ 
        if(input.includes('ArrowDown')){ //달릴 때 ARROW DOWN 누르면 앉음
-        this.player.setState(states.SITTING,0);
+        this.game.player.setState(states.SITTING,0);
        }else if(input.includes('ArrowUp')){ //달릴 때 ARROW UP 누르면 jump
-        this.player.setState(states.JUMPING,1);
+        this.game.player.setState(states.JUMPING,1);
        }else if(input.includes('Control')){
-        this.player.setState(states.ROLLING,2);
+        this.game.player.setState(states.ROLLING,2);
        }
     };
 };
 
 export class Jumping extends State {
-    constructor(player) {
-        super('JUMPING');
-        this.player = player;
+    constructor(game) {
+        super('JUMPING',game);
     };
 
     enter(){
-        this.player.maxFrame = 6;
-        if(this.player.onGround()){
-            this.player.vy -= 22;
+        this.game.player.maxFrame = 6;
+        if(this.game.player.onGround()){
+            this.game.player.vy -= 22;
         }
-        this.player.frameX = 0;
-        this.player.frameY = 1;
+        this.game.player.frameX = 0;
+        this.game.player.frameY = 1;
     };
 
     handleInput(input){ // 뛴 후 내려올 때
-       if(this.player.vy > this.player.weight){
-        this.player.setState(states.FALLING,1);
+       if(this.game.player.vy > this.game.player.weight){
+        this.game.player.setState(states.FALLING,1);
        }else if(input.includes('Control')){
-        this.player.setState(states.ROLLING,2);
+        this.game.player.setState(states.ROLLING,2);
        }
     };
 };
 
 export class Falling extends State {
-    constructor(player) {
-        super('FALLING');
-        this.player = player;
+    constructor(game) {
+        super('FALLING',game);
     }
 
     enter(){
-        this.player.frameX = 0;
-        this.player.maxFrame = 6;
-        this.player.frameY = 2;
+        this.game.player.frameX = 0;
+        this.game.player.maxFrame = 6;
+        this.game.player.frameY = 2;
     };
 
     handleInput(input){  //내려온 후 달림 상태로 전환
-       if(this.player.onGround()){
-        this.player.setState(states.RUNNING,1);
+       if(this.game.player.onGround()){
+        this.game.player.setState(states.RUNNING,1);
        }
     };
 };
 
 export class Rolling extends State {
-    constructor(player) {
-        super('ROLLING');
-        this.player = player;
+    constructor(game) {
+        super('ROLLING',game);
     }
 
     enter(){
-        this.player.frameX = 0;
-        this.player.maxFrame = 6;
-        this.player.frameY = 6;
+        this.game.player.frameX = 0;
+        this.game.player.maxFrame = 6;
+        this.game.player.frameY = 6;
     };
 
     handleInput(input){  //내려온 후 달림 상태로 전환
         console.log("input=>",input);
-       if(!input.includes('Control') && this.player.onGround()){
-        this.player.setState(states.RUNNING,1);
-       }else if(!input.includes('Control') && !this.player.onGround()){
-        this.player.setState(states.FALLING,1);
-       }else if(input.includes('Control') && input.includes('ArrowUp') && this.player.onGround()){
-        this.player.vy -= 24;
+       if(!input.includes('Control') && this.game.player.onGround()){
+        this.game.player.setState(states.RUNNING,1);
+       }else if(!input.includes('Control') && !this.game.player.onGround()){
+        this.game.player.setState(states.FALLING,1);
+       }else if(input.includes('Control') && input.includes('ArrowUp') && this.game.player.onGround()){
+        this.game.player.vy -= 24;
        }
     };
 };
 
 export class Diving extends State {
-    constructor(player) {
-        super('DIVING');
-        this.player = player;
+    constructor(game) {
+        super('DIVING',game);
     }
 
     enter(){
-        this.player.frameX = 0;
-        this.player.maxFrame = 6;
-        this.player.frameY = 2;
+        this.game.player.frameX = 0;
+        this.game.player.maxFrame = 6;
+        this.game.player.frameY = 2;
     };
 
     handleInput(input){  //내려온 후 달림 상태로 전환
-       if(this.player.onGround()){
-        this.player.setState(states.RUNNING,1);
+       if(this.game.player.onGround()){
+        this.game.player.setState(states.RUNNING,1);
        }
     };
 };
 
 export class Hit extends State {
-    constructor(player) {
-        super('HIT');
-        this.player = player;
+    constructor(game) {
+        super('HIT',game);
     }
 
     enter(){
-        this.player.frameX = 0;
-        this.player.maxFrame = 6;
-        this.player.frameY = 2;
+        this.game.player.frameX = 0;
+        this.game.player.maxFrame = 6;
+        this.game.player.frameY = 2;
     };
 
     handleInput(input){  //내려온 후 달림 상태로 전환
-       if(this.player.onGround()){
-        this.player.setState(states.RUNNING,1);
+       if(this.game.player.onGround()){
+        this.game.player.setState(states.RUNNING,1);
        }
     };
 };

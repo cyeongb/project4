@@ -1,8 +1,9 @@
-import { Sitting , Running , Jumping , Falling ,Rolling ,Diving } from './playerStates.js'
+import { Sitting , Running , Jumping , Falling ,Rolling ,Diving , Hit } from './playerStates.js'
 
 // 플레이어 정의
 export class Player{
     constructor(game){
+        console.log("game =>> ",game);
         this.game = game;
         this.width = 100;
         this.height = 91.3;
@@ -23,10 +24,10 @@ export class Player{
         this.speed = 0;
         this.maxSpeed = 3;
 
-        this.states = [new Sitting(this), new Running(this) , new Jumping(this), 
-            new Falling(this), new Rolling(this)];
-        this.currentState = this.states[0];
-        this.currentState.enter();
+        this.states = [new Sitting(this.game), new Running(this.game) , new Jumping(this.game), 
+            new Falling(this.game), new Rolling(this.game), new Diving(this.game), new Hit(this.game)];
+        // this.currentState = this.states[0];
+        // this.currentState.enter();
 
         this.score = 0;
     }
