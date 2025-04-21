@@ -3,6 +3,7 @@ export class UI{
         this.game = game;
         this.fontSize = 35;
         this.fontFamily = 'Special Gothic Expanded One';
+        this.lives = document.getElementById('heart');
     }
 
     drawUI(context){
@@ -24,8 +25,13 @@ export class UI{
         context.fillText('Score : '+this.game.score, 20, 50);
         
         context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
-
         context.fillText('Time : '+(this.game.time * 0.001).toFixed(1), 20, 80);
+
+        //목숨 5개
+        for(let i = 0; i < this.game.lives; i++){
+            context.drawImage(this.lives, 20 * i + 25, 95, 25, 25 );
+        }
+
 
         if(this.game.gameOver){
             context.textAlign = 'center';

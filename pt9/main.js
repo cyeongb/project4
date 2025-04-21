@@ -56,6 +56,7 @@ window.addEventListener('load', function(){
             this.player.currentState = this.player.states[0];
             this.player.currentState.enter();
             this.gameOver = false;
+            this.lives = 5; //목숨 5개
 
         }
 
