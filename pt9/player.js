@@ -48,7 +48,8 @@ export class Player{
         }else{
             this.speed = 0;}
 
-        if(this.x <0){ this.x = 0; }
+        if(this.x <0){ 
+            this.x = 0; }
 
         if(this.x > this.game.width - this.width){
             this.x = this.game.width - this.width;
@@ -60,6 +61,10 @@ export class Player{
             this.vy += this.weight; // 땅으로 내려옴
         }else{
             this.vy = 0;
+        }
+
+        if(this.y > this.game.height - this.height - this.game.groundMargin){
+            this.y = this.game.height - this.height - this.game.groundMargin;
         }
 
         //스프라이트 이미지
