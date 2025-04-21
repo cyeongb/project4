@@ -1,4 +1,4 @@
-import { Sitting , Running , Jumping , Falling ,Rolling ,Diving , Hit } from './playerStates.js'
+import { Sitting , Running , Jumping , Falling , Rolling , Diving , Hit } from './playerStates.js'
 
 // 플레이어 정의
 export class Player{

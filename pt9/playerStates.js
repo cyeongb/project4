@@ -54,7 +54,7 @@ export class Running extends State {
     };
 
     handleInput(input){ 
-        this.game.particles.push(new Dust(
+        this.game.particles.unshift(new Dust(
             this.game, this.game.player.x + this.game.player.width * 0.6,
             this.game.player.y + this.game.player.height));
 
@@ -84,9 +84,11 @@ export class Jumping extends State {
 
     handleInput(input){ // 뛴 후 내려올 때
        if(this.game.player.vy > this.game.player.weight){
-        this.game.player.setState(states.FALLING,1);
+        this.game.player.setState(states.FALLING, 1);
        }else if(input.includes('Control')){
-        this.game.player.setState(states.ROLLING,2);
+        this.game.player.setState(states.ROLLING, 2);
+       }else if(input.includes('ArrowDown')){
+        this.game.player.setState(states.DIVING , 0);
        }
     };
 };
@@ -105,6 +107,8 @@ export class Falling extends State {
     handleInput(input){  //내려온 후 달림 상태로 전환
        if(this.game.player.onGround()){
         this.game.player.setState(states.RUNNING,1);
+       }else if(input.includes('ArrowDown')){
+        this.game.player.setState(states.DIVING , 0);
        }
     };
 };
@@ -121,7 +125,10 @@ export class Rolling extends State {
     };
 
     handleInput(input){  //내려온 후 달림 상태로 전환
-        console.log("input=>",input);
+        this.game.particles.unshift(new Fire(
+            this.game, this.game.player.x + this.game.player.width * 0.5,
+            this.game.player.y + this.game.player.height * 0.6));
+
        if(!input.includes('Control') && this.game.player.onGround()){
         this.game.player.setState(states.RUNNING,1);
        }else if(!input.includes('Control') && !this.game.player.onGround()){
@@ -140,12 +147,18 @@ export class Diving extends State {
     enter(){
         this.game.player.frameX = 0;
         this.game.player.maxFrame = 6;
-        this.game.player.frameY = 2;
+        this.game.player.frameY = 6;
     };
 
     handleInput(input){  //내려온 후 달림 상태로 전환
+        this.game.particles.unshift(new Fire(
+            this.game, this.game.player.x + this.game.player.width * 0.5,
+            this.game.player.y + this.game.player.height * 0.6));
+
        if(this.game.player.onGround()){
         this.game.player.setState(states.RUNNING,1);
+       }else if(input.includes('Control') && !this.game.player.onGround()){
+        this.game.player.setState(states.ROLLING,2);
        }
     };
 };

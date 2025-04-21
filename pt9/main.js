@@ -33,9 +33,12 @@ window.addEventListener('load', function(){
 
             //적 관련, 나타나는 시간
             this.enemies = [];
-            this.particles=[];
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
+            
+            //player 의 파편
+            this.particles=[];
+            this.maxParticles = 50; // 파편 길이
 
             //debug 모드
             this.debug = false;
@@ -73,7 +76,12 @@ window.addEventListener('load', function(){
                 if(part.markedForDeletion){
                     this.particles.splice(i,1);
                 }
-            })
+            });
+
+            //파편이 너무 길어서 자름
+            if(this.particles.length > this.maxParticles){
+                this.particles = this.particles.slice(0,this.maxParticles);
+            }
         }
 
         draw(context){
