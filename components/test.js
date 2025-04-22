@@ -177,6 +177,7 @@ window.addEventListener('load', function(){
             this.maxSpeed = 3;
             this.baseSpeed = 3;
             this.speedTimer = 0;
+            this.enemyTimer = 0;  // 적 타이머도 리셋
             this.enemyInterval = 1000;
             this.isStart = true;
             
@@ -204,14 +205,13 @@ window.addEventListener('load', function(){
 
         game = new Game(canvas.width, canvas.height);
         game.isStart = true; 
-        lastTime = performance.now();
-        // lastTime = 0;
+        lastTime = performance.now(); // 정확한 시작 시간 설정
         
         if (animationId) {
             cancelAnimationFrame(animationId);
         }
         
-        animate(0);
+        animate(lastTime); // 시작 시간으로 애니메이션 시작
     }
 
     // 게임 종료 시 메뉴 표시
@@ -228,19 +228,18 @@ window.addEventListener('load', function(){
         if (game && game.gameOver) {
             // 게임 재시작
             game.reset();
-            // lastTime = 0;
-            lastTime = performance.now(); 
+            lastTime = performance.now(); // 재시작 시 시간 리셋
             if (animationId) {
                 cancelAnimationFrame(animationId);
             }
-            animate(0);
+            animate(lastTime);
         }
     });
 
     //게임 그려줌
     function animate(timeStamp){  //requestAnimationFrame 에 의해 생성되는 timeStamp
         const deltaTime = timeStamp - lastTime;
-        lastTime = timeStamp;   //??
+        lastTime = timeStamp;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         game.update(deltaTime);
         game.draw(ctx);

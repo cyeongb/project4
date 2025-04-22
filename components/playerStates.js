@@ -35,9 +35,9 @@ export class Sitting extends State {
 
     handleInput(input){  //앉아 있을 때, 방향키 누르면 달림
        if(input.includes('ArrowLeft') || input.includes('ArrowRight')){
-        this.game.player.setState(states.RUNNING,1);
+        this.game.player.setState(states.RUNNING,1.5);
        }else if(input.includes('Control')){
-        this.game.player.setState(states.ROLLING,1);
+        this.game.player.setState(states.ROLLING,2);
        }
     };
 };
@@ -107,7 +107,7 @@ export class Falling extends State {
 
     handleInput(input){  //내려온 후 달림 상태로 전환
        if(this.game.player.onGround()){
-        this.game.player.setState(states.RUNNING,1);
+        this.game.player.setState(states.RUNNING,1.5);
        }else if(input.includes('ArrowDown')){
         this.game.player.setState(states.DIVING , 0);
        }
@@ -131,7 +131,7 @@ export class Rolling extends State {
             this.game.player.y + this.game.player.height * 0.6));
 
        if(!input.includes('Control') && this.game.player.onGround()){
-        this.game.player.setState(states.RUNNING,1);
+        this.game.player.setState(states.RUNNING,1.5);
        }else if(!input.includes('Control') && !this.game.player.onGround()){
         this.game.player.setState(states.FALLING,1);
        }else if(input.includes('Control') && input.includes('ArrowUp') && this.game.player.onGround()){
@@ -160,7 +160,7 @@ export class Diving extends State {
             this.game.player.y + this.game.player.height * 0.6));
 
        if(this.game.player.onGround()){
-        this.game.player.setState(states.RUNNING,1);
+        this.game.player.setState(states.RUNNING,1.5);
         for(let i= 0; i< 30; i++){
             this.game.particles.unshift(new Splash(this.game, this.game.player.x + this.game.player.width * 0.5,
                  this.game.player.y + this.game.player.height));
@@ -184,7 +184,7 @@ export class Hit extends State {
 
     handleInput(input){  //내려온 후 달림 상태로 전환
        if(this.game.player.frameX >= 10 && this.game.player.onGround() ){
-        this.game.player.setState(states.RUNNING,1);
+        this.game.player.setState(states.RUNNING,1.5);
        }else if(this.game.player.frameX >= 10 && !this.game.player.onGround()){
         this.game.player.setState(states.FALLING,1);
        }
