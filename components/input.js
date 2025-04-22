@@ -3,7 +3,7 @@ export class InputHandler{
         this.game = game;
         this.keys = [];
         window.addEventListener('keydown', e => {
-            console.log("e.key??=> ",e.key);
+            // console.log("e.key??=> ",e.key);
             if((e.key === 'ArrowDown' || 
                 e.key === 'ArrowUp' ||
                 e.key === 'ArrowLeft' ||

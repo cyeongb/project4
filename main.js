@@ -71,9 +71,9 @@ window.addEventListener('load', function(){
 
         update(deltaTime){
             
-            console.log("this.isStart =>> ",this.isStart);
+            // console.log("this.isStart =>> ",this.isStart);
             if(this.isStart === true){
-                console.log("isStart 1 =>",this.isStart);
+                // console.log("isStart 1 =>",this.isStart);
                 this.time += deltaTime;
                 // 시간 제한 다되면 game over
                 // if(this.time > this.maxTime){
@@ -87,7 +87,7 @@ window.addEventListener('load', function(){
                         this.maxSpeed = this.baseSpeed;
                         this.speedTimer = 0;  // 타이머 리셋
                         this.enemyInterval = Math.max(300, this.enemyInterval - 100); //최소 300ms 까지만.
-                        console.log("속도증가");
+                        // console.log("속도증가");
                     }
                 }
 
