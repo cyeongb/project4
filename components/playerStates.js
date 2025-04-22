@@ -37,7 +37,7 @@ export class Sitting extends State {
        if(input.includes('ArrowLeft') || input.includes('ArrowRight')){
         this.game.player.setState(states.RUNNING,1);
        }else if(input.includes('Control')){
-        this.game.player.setState(states.ROLLING,2);
+        this.game.player.setState(states.ROLLING,1);
        }
     };
 };

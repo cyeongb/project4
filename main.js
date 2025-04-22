@@ -121,9 +121,9 @@ window.addEventListener('load', function(){
                 part.drawParticle(context);
             });
 
-            this.collisions.forEach(col => {
-                col.drawCollision(context);
-            });
+            // this.collisions.forEach(col => {
+            //     col.drawCollision(context);
+            // });
 
             this.floatingMessages.forEach(msg => {
                 msg.drawFloating(context);

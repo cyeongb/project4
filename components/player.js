@@ -122,7 +122,7 @@ export class Player{
                }else{ //부딪힌 상태(스턴)
                     this.setState(6,0);
                     this.game.lives --;  //목숨 깎임
-                    this.game.score -= 5; //점수도 깎임.?
+                    this.game.score -= 5; //점수도 깎임.
                     if(this.game.lives <= 0){
                         this.game.gameOver = true;
                     }
