@@ -5,7 +5,7 @@ import { FloatingMsg } from './floatingMessage.js'
 // 플레이어 정의
 export class Player{
     constructor(game){
-        console.log("game =>> ",game);
+        // console.log("game =>> ",game);
         this.game = game;
         this.width = 100;
         this.height = 91.3;
