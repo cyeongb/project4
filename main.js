@@ -43,7 +43,7 @@ window.addEventListener('load', function(){
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
             this.time = 0;
-            this.maxTime = 100000;  //시간제한 1분
+            this.maxTime = 60000;  //시간제한 1분
             
             //player 의 파편
             this.particles=[];
