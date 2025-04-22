@@ -240,7 +240,8 @@ window.addEventListener('load', function(){
     //게임 그려줌
     function animate(timeStamp){  //requestAnimationFrame 에 의해 생성되는 timeStamp
         const deltaTime = timeStamp - lastTime;
-        lastTime = timeStamp;   //??
+        lastTime = timeStamp;   //lasttime: 이 전 프레임이 실행된 시간
+        //timestamp : 현재 프레임 시간
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         game.update(deltaTime);
         game.draw(ctx);
