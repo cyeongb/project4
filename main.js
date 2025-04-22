@@ -1,10 +1,10 @@
 //게임 실행 시 메인으로 실행되는 js
 
-import { Player } from "./player.js";
-import {InputHandler} from "./input.js";
-import { Background } from "./background.js";
-import {FlyEnemy, GroundEnemy, ClimbEnemy } from "./enemies.js";
-import { UI } from './UI.js';
+import { Player } from "./components/player.js";
+import {InputHandler} from "./components/input.js";
+import { Background } from "./components/background.js";
+import {FlyEnemy, GroundEnemy, ClimbEnemy } from "./components/enemies.js";
+import { UI } from './view/UI.js';
 
 window.addEventListener('load', function(){
     const canvas = this.document.getElementById('canvas1');
