@@ -80,7 +80,7 @@ window.addEventListener('load', function(){
                         this.gameOver = true;
                     }
                                         
-                    // 20초마다 속도 증가
+                    // 10초마다 속도 증가
                     this.speedTimer += deltaTime;
                     if (this.speedTimer >= 10000) {  // 60초 = 60000ms
                         this.baseSpeed += this.speedIncrement;
