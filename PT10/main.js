@@ -11,7 +11,9 @@ window.addEventListener('load', function(){
     const ctx = canvas.getContext('2d');
     canvas.width = 900;
     canvas.height = 600;
-
+    
+    const startMenu = this.document.getElementById('startMenu');
+    const startButton = this.document.getElementById('startButton');
 
     class Game{
         constructor(width,height){
@@ -40,7 +42,7 @@ window.addEventListener('load', function(){
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
             this.time = 0;
-            //this.maxTime = 20000;  //시간제한
+            // 시간 제한 없음
             
             //player 의 파편
             this.particles=[];
@@ -66,27 +68,18 @@ window.addEventListener('load', function(){
 
         update(deltaTime){
             this.time += deltaTime;
-
-            // 시간 제한 다되면 game over
-            // if(this.time > this.maxTime){
-            //     this.gameOver = true;
-            // }
-
-            this.background.updateBackground();
-            this.player.playerUpdate(this.input.keys , deltaTime);
-
-            // 30초마다 속도 증가
+            
+            // 1분마다 속도 증가
             this.speedTimer += deltaTime;
-            if (this.speedTimer >= 30000) {  // 60초 = 60000ms
+            if (this.speedTimer >= 60000) {  // 60초 = 60000ms
                 this.baseSpeed += this.speedIncrement;
                 this.maxSpeed = this.baseSpeed;
                 this.speedTimer = 0;  // 타이머 리셋
-                console.log("속도증가");
+                console.log("Speed increased to:", this.maxSpeed);
             }
 
             this.background.updateBackground();
             this.player.playerUpdate(this.input.keys , deltaTime);
-
 
             // 적 나오는 시간 조정
             if(this.enemyTimer > this.enemyInterval){
@@ -139,9 +132,9 @@ window.addEventListener('load', function(){
                 part.drawParticle(context);
             });
 
-            // this.collisions.forEach(col => {
-            //     col.drawCollision(context);
-            // });
+            this.collisions.forEach(col => {
+                col.drawCollision(context);
+            });
 
             this.floatingMessages.forEach(msg => {
                 msg.drawFloating(context);
@@ -163,18 +156,16 @@ window.addEventListener('load', function(){
         }
     }
 
-    // const game = new Game(canvas.width, canvas.height);
-
-    let lastTime = 0;
     let game;
     let animationId;
+    let lastTime = 0;
 
     // 게임 시작 함수
     function startGame() {
-        console.log('startGame()');
+        // DOM 요소에 직접 스타일 적용
         startMenu.style.display = 'none';
         canvas.style.display = 'block';
-
+        
         game = new Game(canvas.width, canvas.height);
         lastTime = 0;
         
@@ -188,25 +179,26 @@ window.addEventListener('load', function(){
     // 게임 종료 시 메뉴 표시
     function showGameOverMenu() {
         startButton.textContent = 'RESTART';
-        startMenu.classList.remove('hidden');
+        startMenu.style.display = 'block';
     }
 
     startButton.addEventListener('click', startGame);
 
     function animate(timeStamp){  //requestAnimationFrame 에 의해 생성되는 timeStamp
         const deltaTime = timeStamp - lastTime;
-        lastTime = timeStamp;   //??
+        lastTime = timeStamp;   
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         game.update(deltaTime);
         game.draw(ctx);
+        
         if(!game.gameOver) {
             animationId = requestAnimationFrame(animate);
         } else {
             showGameOverMenu();
         }
     }
+    
     // 초기 화면 설정
     canvas.style.display = 'none';
     startMenu.style.display = 'block';
-    // animate(0);
 });

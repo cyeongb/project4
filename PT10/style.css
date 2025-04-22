@@ -1,29 +1,28 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
 }
 
-#canvas1{
-    border: 5px solid #000;
+body {
+    overflow: hidden;
+    background: #000;
+}
+
+#canvas1 {
+    border: 4px solid white;
     position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     max-width: 100%;
     max-height: 100%;
+    display: none; /* 초기에는 숨김 */
 }
 
-#player, #layer1, #layer2, #layer3, #layer4, #layer5, #heart,
-#enemy_fly, #enemy_plant, #enemy_spider_big , #fire, #collision{
-     display: none;
-}
-
-.special-gothic-expanded-one-regular {
-    font-family: "Special Gothic Expanded One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+#player, #layer1, #layer2, #layer3, #layer4, #layer5,
+#enemy_fly, #enemy_plant, #enemy_spider_big, #fire, #collision, #heart {
+    display: none;
 }
 
 #startMenu {
@@ -53,7 +52,7 @@
     padding: 15px 40px;
     font-size: 24px;
     font-family: 'Special Gothic Expanded One', sans-serif;
-    background-color: #272727;
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
@@ -62,8 +61,9 @@
 }
 
 #startButton:hover {
-    background-color: #6e706e;
+    background-color: #45a049;
 }
-  
-  
-  
+
+.hidden {
+    display: none !important;
+}
