@@ -1,9 +1,45 @@
 export class UI{
-    constructor(game) {
+    constructor(game,canvas) {
         this.game = game;
         this.fontSize = 35;
         this.fontFamily = 'Special Gothic Expanded One';
         this.lives = document.getElementById('heart');
+
+         // 리스타트 버튼 설정
+         this.restartButton = {
+            x: this.game.width * 0.5 - 100,
+            y: this.game.height * 0.5 + 60,
+            width: 200,
+            height: 50,
+            color: '#3c3c3c80',
+            hoverColor: '#7e7c7c80',
+            isHovered: false
+        };
+
+        // 마우스 이벤트 리스너 추가
+        canvas.addEventListener('mousemove', (e) => {
+            if(this.game.gameOver) {
+                const rect = canvas.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                
+                // 버튼 호버 상태 체크
+                this.restartButton.isHovered = 
+                    mouseX >= this.restartButton.x && 
+                    mouseX <= this.restartButton.x + this.restartButton.width &&
+                    mouseY >= this.restartButton.y && 
+                    mouseY <= this.restartButton.y + this.restartButton.height;
+                
+                // 커서 변경
+                canvas.style.cursor = this.restartButton.isHovered ? 'pointer' : 'default';
+            }
+        });
+        
+        canvas.addEventListener('click', (e) => {
+            if(this.game.gameOver && this.restartButton.isHovered) {
+                this.restartGame();
+            }
+        });
     }
 
     drawUI(context){
@@ -18,7 +54,6 @@ export class UI{
         context.font = this.fontSize + ' px'+this.fontFamily;
         context.textAlign = 'left';
         context.fillStyle - this.game.fontColor;
-        console.log("this.game.score =>>",this.game.score);  //undefined
 
         //점수
         context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
@@ -36,17 +71,32 @@ export class UI{
         if(this.game.gameOver){
             context.textAlign = 'center';
             context.font = this.fontSize * 2 + 'px '+ this.fontFamily;
-            if(this.game.score > 5){
-                context.fillText('게임오버 : ( ',this.game.width * 0.5, this.game.height * 0.5 - 20);    
-                context.font = this.fontSize * 0.7 + 'px '+ this.fontFamily;
-                context.fillText('한 판 더함???????????????? ',this.game.width * 0.5, this.game.height * 0.5 + 20);
-            }else{
-                context.fillText('게임오버 : ( ',this.game.width * 0.5, this.game.height * 0.5 - 20);    
-                context.font = this.fontSize * 0.7 + 'px '+ this.fontFamily;
-                context.fillText('한 판 더함???????????????? ',this.game.width * 0.5, this.game.height * 0.5 + 20);
-                //보고 필요없으면 하나로 합치기..
-            }
+            
+            context.fillText('G A M E   O V E R : ( ',this.game.width * 0.5, this.game.height * 0.5 - 20);    
+            context.font = this.fontSize * 0.7 + 'px '+ this.fontFamily;
+            context.fillText('한 판 더함???????????????? ',this.game.width * 0.5, this.game.height * 0.5 + 20);
+            
+            this.drawRestartButton(context);
         }
         context.restore();
     }
+    //리스타트
+    drawRestartButton(context) {
+        // 버튼 배경
+        context.fillStyle = this.restartButton.isHovered ? this.restartButton.hoverColor : this.restartButton.color;
+        context.fillRect(this.restartButton.x, this.restartButton.y, this.restartButton.width, this.restartButton.height);
+        
+        // 버튼 텍스트
+        context.fillStyle = '#ffffff';
+        context.font = this.fontSize * 0.8 + 'px ' + this.fontFamily;
+        context.textAlign = 'center';
+        context.fillText('RESTART', this.restartButton.x + this.restartButton.width/2, this.restartButton.y + this.restartButton.height/2 + 10);
+    }
+    
+    restartGame() {
+        // 게임 재시작 이벤트 발생
+        const restartEvent = new CustomEvent('restartGame');
+        window.dispatchEvent(restartEvent);
+    }
+
 }

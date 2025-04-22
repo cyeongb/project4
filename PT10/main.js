@@ -42,7 +42,6 @@ window.addEventListener('load', function(){
             this.enemyTimer = 0;
             this.enemyInterval = 1000;
             this.time = 0;
-            // 시간 제한 없음
             
             //player 의 파편
             this.particles=[];
@@ -63,19 +62,24 @@ window.addEventListener('load', function(){
             this.gameOver = false;
             this.lives = 5; //목숨 5개
             this.floatingMessages = [];
-
+            
+            //start 하면 시간 카운트 되게끔.
+            this.isStart = false;
         }
 
         update(deltaTime){
-            this.time += deltaTime;
-            
-            // 1분마다 속도 증가
-            this.speedTimer += deltaTime;
-            if (this.speedTimer >= 60000) {  // 60초 = 60000ms
-                this.baseSpeed += this.speedIncrement;
-                this.maxSpeed = this.baseSpeed;
-                this.speedTimer = 0;  // 타이머 리셋
-                console.log("Speed increased to:", this.maxSpeed);
+            if(this.isStart === true){
+                this.time += deltaTime;
+                
+                // 10초마다 속도 증가
+                this.speedTimer += deltaTime;
+                if (this.speedTimer >= 10000) {  // 10초 = 10000ms
+                    this.baseSpeed += this.speedIncrement;
+                    this.maxSpeed = this.baseSpeed;
+                    this.speedTimer = 0;  // 타이머 리셋
+                    this.enemyInterval = Math.max(300, this.enemyInterval - 100); //최소 300ms 까지만.
+                    console.log("속도증가");
+                }
             }
 
             this.background.updateBackground();
@@ -140,9 +144,7 @@ window.addEventListener('load', function(){
                 msg.drawFloating(context);
             });
 
-
             this.UI.drawUI(context);
-
         }
 
         //적을 랜덤으로 생성
@@ -154,19 +156,45 @@ window.addEventListener('load', function(){
             }
             this.enemies.push(new FlyEnemy(this));  //여기서 game 객체 넘겨줌.
         }
+        
+        reset() {
+            // 게임 초기화
+            this.score = 0;
+            this.time = 0;
+            this.lives = 5;
+            this.gameOver = false;
+            this.enemies = [];
+            this.particles = [];
+            this.collisions = [];
+            this.floatingMessages = [];
+            this.speed = 0;
+            this.maxSpeed = 3;
+            this.baseSpeed = 3;
+            this.speedTimer = 0;
+            this.enemyInterval = 1000;
+            this.isStart = true;
+            
+            // 플레이어 초기화
+            this.player.x = 0;
+            this.player.y = this.height - this.player.height - this.groundMargin;
+            this.player.frameX = 0;
+            this.player.frameY = 0;
+            this.player.vy = 0;
+            this.player.setState(0, 0); // Sitting 상태로 초기화
+        }
     }
 
+    let lastTime = 0;
     let game;
     let animationId;
-    let lastTime = 0;
 
     // 게임 시작 함수
     function startGame() {
-        // DOM 요소에 직접 스타일 적용
         startMenu.style.display = 'none';
         canvas.style.display = 'block';
-        
+
         game = new Game(canvas.width, canvas.height);
+        game.isStart = true; 
         lastTime = 0;
         
         if (animationId) {
@@ -179,10 +207,23 @@ window.addEventListener('load', function(){
     // 게임 종료 시 메뉴 표시
     function showGameOverMenu() {
         startButton.textContent = 'RESTART';
-        startMenu.style.display = 'block';
+        // UI 클래스에서 리스타트 버튼을 그리므로 여기서는 메뉴를 표시하지 않음
     }
 
     startButton.addEventListener('click', startGame);
+    
+    // UI 클래스에서 발생하는 restartGame 이벤트 리스너
+    window.addEventListener('restartGame', () => {
+        if (game && game.gameOver) {
+            // 게임 재시작
+            game.reset();
+            lastTime = 0;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            animate(0);
+        }
+    });
 
     function animate(timeStamp){  //requestAnimationFrame 에 의해 생성되는 timeStamp
         const deltaTime = timeStamp - lastTime;
