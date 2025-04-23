@@ -62,7 +62,7 @@ window.addEventListener('load', function(){
             this.player.currentState = this.player.states[0];
             this.player.currentState.enter();
             this.gameOver = false;
-            this.lives = 5; //목숨 5개
+            this.lives = 1; //목숨 1개
             this.floatingMessages = [];
             
             //start 하면 시간 카운트 되게끔.
@@ -167,7 +167,7 @@ window.addEventListener('load', function(){
             // 게임 초기화
             this.score = 0;
             this.time = 0;
-            this.lives = 5;
+            this.lives = 1;
             this.gameOver = false;
             this.enemies = [];
             this.particles = [];
