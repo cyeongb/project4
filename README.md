@@ -5,7 +5,8 @@ https://www.notion.so/cyeongb/4-HTML5-CANVAS-1ddaa4605a0b8012b60fc64e37cd1318?pv
 
 
 ---
-<img width="362" alt="image" src="https://github.com/user-attachments/assets/b23124b6-7468-4e50-a1f0-da27cb0024ec" />
+
+<img width="274" alt="image" src="https://github.com/user-attachments/assets/54e74805-e368-4e68-b8fc-ea3819d39f1a" />
 
 ------
 
